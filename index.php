@@ -23,31 +23,30 @@ Entrer des articles liés à la catégorie
 
 
 <?php 
-@$articleTitle = $_POST['article_title']; // @ prevents from error if $_POST does not exist
+@$articleTitle = $_POST['article_title'];
 @$articleContent = $_POST['article_content'];
 @$categoryId = $_POST['category_id'];
+@$articleId = $_POST['article_id'];
 
 $listCategories = listCategories();
-$getListArtById = getListArtById($categoryId);
-
 
 // Call add function
 if(isset($_POST['add'])) {
-    setProduct($articleTitle, $articleContent, $categoryId); // Add a product to the database
+    setProduct($articleTitle, $articleContent, $categoryId);
 }
 
-// // Call modify function
-// if(isset($_POST['modify'])) {
-//     $idProduct = $_POST['article_id'];
-//     $productModif = getArticleById($ArticleId);
-//     $btn = true;
-// }
+// Call modify function
+if(isset($_POST['modify'])) {
+    modifyArticle($articleId, $articleTitle, $articleContent);
+    $btn = true;
+}
 
-// // Call save modification function
-// if(isset($_POST['saveModif'])) {
-//     $idProduct = $_POST['article_id'];
-//     updateProduct($idProduct, $productName, $articleCOntent);
-// }
+// Display article title and content in inputs
+if(isset($_POST['article_id'])) {
+    $getArticleById = getArticleById($articleId);
+}
+
+$listTitles = listTitles($categoryId);
 
 // // Call delete function
 // if(isset($_POST['delete'])){
@@ -82,36 +81,54 @@ if(isset($_POST['add'])) {
 <div class="container">
 
 <h1 class="rounded border p-2 m-4 text-center text-white bg-primary">BECOME A DEV</h1>
-<p>The blog that will make you a more professional developer</p>
+<p class="text-center font-italic">The blog that will make you become a more professional developer</p>
 
 
 <!-- ADD / MODIFY PRODUCT -->
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
-    <h3 class="p-2 m-2 text-center">Article management system</h3>
+    <h3 class="p-2 m-2 text-center">Article Management System</h3>
     <div class="divider"></div>
 
-    <select class="custom-select mb-3" name="category_id" id="" required onChange="submit()">
-        <option value="">Please select a category</option>
-        <?php foreach($listCategories as $row): ?>
+        <!-- Category list -->
+        <select class="custom-select mb-3" name="category_id" id="" required onChange="submit()">
+            <option value="">Please select a category</option>
+            <?php foreach($listCategories as $row): ?>
 
                 <option 
                 value="<?php echo $row['category_id']; ?>" 
-                <?php if($row['category_id'] === @$_POST['category_id']){ echo "selected"; } // Display selected if id after post is the same as id ?>>
+                <?php if($row['category_id'] === @$_POST['category_id']){ echo "selected"; }?>>
                     <?php echo $row['category_name']; ?>
                 </option>
+            
+            <?php endforeach ?>
+        </select>
+
+        <!-- Title list -->
+        <select class="custom-select" name="article_id" id="" onChange="submit()">
+            <option value="">Please select an article</option>
+            <?php foreach($listTitles as $row): ?>
+
+                <option 
+                value="<?php echo $row['article_id'] ?>" 
+                <?php if($row['article_id'] === @$_POST['article_id']){ echo "selected"; }?>>
+                    <?php echo $row['article_title']; ?>
+                </option>
+            
+            <?php endforeach ?>
+        </select>
+        <small>Please select an article only if you need to modify it</small>
+
         
-        <?php endforeach ?>
-    </select>
-    
-            <input class="col-md-12 mb-2" type="text" name="article_title" value="<?= @$productModif['article_title'] ?>" placeholder="Title" required style="height: 45px">
-            <textarea class="col-md-12 mb-2" name="article_content" id="" cols="30" rows="10" class="d-block" placeholder="Content of the article"></textarea>
-            <?php // if(@$btn) { ?>
-                <button button type="submit" name="Modify" value="Modify" class="btn btn-info">Modify <i class="far fa-save"></i></button>
-            <?php // } else { ?>
-                <button type="submit" name="add" class="btn btn-success">Add <i class="fas fa-plus-circle"></i></button>
-            <?php // } ?>
-            <input type="hidden" name="article_id" value="<?= $productModif['article_id'] ?>">
+        <!-- Title input and Content input -->
+        <input class="col-md-12 mb-3 mt-3" type="text" name="article_title" value="<?= @$getArticleById['article_title'] ?>" placeholder="Title" required style="height: 45px">
+        <textarea class="col-md-12 mb-3" name="article_content" id="" cols="30" rows="10" class="d-block" placeholder="Content of the article"><?= @$getArticleById['article_content'] ?></textarea>
+        <?php // if(@$btn) { ?>
+            <button button type="submit" name="modify" value="Modify" class="btn btn-info">Modify <i class="far fa-save"></i></button>
+        <?php // } else { ?>
+            <button type="submit" name="add" class="btn btn-success">Add <i class="fas fa-plus-circle"></i></button>
+        <?php // } ?>
+
     </div>
 
 </form>
