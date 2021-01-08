@@ -30,6 +30,10 @@ Entrer des articles liés à la catégorie
 
 $listCategories = listCategories();
 
+// if(isset($_POST['article_title'])) {
+//     echo $_POST['article_title'];
+// }
+
 // Call add function
 if(isset($_POST['add'])) {
     setProduct($articleTitle, $articleContent, $categoryId);
@@ -41,19 +45,19 @@ if(isset($_POST['modify'])) {
     $btn = true;
 }
 
+// Call delete function
+if(isset($_POST['delete'])){
+    $articleId = $_POST['article_id'];
+    deleteArticle($articleId);
+}
+
 // Display article title and content in inputs
 if(isset($_POST['article_id'])) {
     $getArticleById = getArticleById($articleId);
 }
 
+
 $listTitles = listTitles($categoryId);
-
-// // Call delete function
-// if(isset($_POST['delete'])){
-//     $idProduct = $_POST['article_id'];
-//     deleteProduct($idProduct);
-// }
-
 ?>
 
 
@@ -105,6 +109,7 @@ $listTitles = listTitles($categoryId);
         </select>
 
         <!-- Title list -->
+        <small>Select an article only if you need to modify it</small>
         <select class="custom-select" name="article_id" id="" onChange="submit()">
             <option value="">Please select an article</option>
             <?php foreach($listTitles as $row): ?>
@@ -117,17 +122,19 @@ $listTitles = listTitles($categoryId);
             
             <?php endforeach ?>
         </select>
-        <small>Please select an article only if you need to modify it</small>
-
         
         <!-- Title input and Content input -->
         <input class="col-md-12 mb-3 mt-3" type="text" name="article_title" value="<?= @$getArticleById['article_title'] ?>" placeholder="Title" required style="height: 45px">
         <textarea class="col-md-12 mb-3" name="article_content" id="" cols="30" rows="10" class="d-block" placeholder="Content of the article"><?= @$getArticleById['article_content'] ?></textarea>
-        <?php // if(@$btn) { ?>
-            <button button type="submit" name="modify" value="Modify" class="btn btn-info">Modify <i class="far fa-save"></i></button>
-        <?php // } else { ?>
-            <button type="submit" name="add" class="btn btn-success">Add <i class="fas fa-plus-circle"></i></button>
-        <?php // } ?>
+
+        <div class="actions text-center">
+            <?php if(@$_POST['article_id']) { ?>
+                <button button type="submit" name="modify" value="Modify" class="btn btn-info"><i class="far fa-save"></i> Save</button>
+                <button type="submit" name="delete" class="btn btn-danger"><i class="fas fa-minus-circle"></i> Delete</button>
+            <?php } else { ?>
+                <button type="submit" name="add" class="btn btn-success"><i class="fas fa-plus-circle"></i> Add</button>
+            <?php } ?>
+        </div>
 
     </div>
 

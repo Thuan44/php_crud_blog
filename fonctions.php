@@ -56,12 +56,12 @@ function modifyArticle($articleId, $articleTitle, $articleContent) {
 
 }
 
-// // Delete product
-// function deleteProduct($idProduct) {
-//     global $connection;
+// Delete product
+function deleteArticle($articleId) {
+    global $connection;
 
-//     $query = "DELETE FROM products WHERE id_product = $idProduct";
-//     $result = $connection->prepare($query);
-//     $result->execute();
-// }
+    $query = "DELETE FROM articles WHERE article_id = $articleId";
+    $result = $connection->prepare($query);
+    $result->execute();
+}
 
