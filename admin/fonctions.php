@@ -1,4 +1,34 @@
 <?php
+session_start();
+
+# LOGIN  ======================
+function login($userEmail, $userPassword) {
+    global $connection;
+
+    $query = "SELECT * FROM users WHERE user_email = '$userEmail' AND user_password = '$userPassword' LIMIT 1";
+    $result = $connection->prepare($query);
+    $result->execute();
+    $data = $result->fetch();
+
+    if($data){
+        $_SESSION['user_name'] = $data['user_name']; 
+        $_SESSION['user_email'] = $data['user_email']; 
+        $_SESSION['user_password'] = $data['user_password']; 
+        $_SESSION['user_role'] = $data['user_role']; 
+
+        // Admin
+        if( $_SESSION['user_role'] == 5) {
+            header ('Location: admin/index.php'); // Redirect to new page
+        } 
+        // Visitor
+        if($_SESSION['user_role'] == 1) {
+            header ('Location: index.php');
+        }
+    } else {
+        session_destroy();
+        // header ('Location: login.php'); // Reload page
+    }
+}
 
 # DROP LISTS ======================
 //  Get the list of categories

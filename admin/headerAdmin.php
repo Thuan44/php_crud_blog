@@ -1,6 +1,6 @@
 <?php 
-include_once 'admin/pdo.php';
-include_once 'admin/fonctions.php'; 
+include_once 'pdo.php';
+include_once 'fonctions.php'; 
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@ include_once 'admin/fonctions.php';
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-warning">
   <a class="navbar-brand font-weight-bold" href="index.php">BECOME A DEV</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -36,11 +36,11 @@ include_once 'admin/fonctions.php';
   </div>
 
   <!-- Sign out button -->
-<a href="logout.php" class="btn btn-outline-secondary"><i class="fas fa-sign-out-alt"></i></a>
+<a href="../logout.php" class="btn btn-outline-secondary"><i class="fas fa-sign-out-alt"></i></a>
 
 </nav>
 
-<h1 class="rounded border p-2 m-4 text-center text-white bg-primary">BECOME A DEV</h1>
+<h1 class="rounded border p-2 m-4 text-center text-white bg-warning">BACK-OFFICE</h1>
 <p class="text-center font-italic">The blog that will make you become a more professional developer</p>
     
 
