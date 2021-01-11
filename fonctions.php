@@ -28,9 +28,13 @@ function listTitles($categoryId) {
 function setProduct($articleTitle, $articleContent, $categoryId) {
     global $connection;
     
-    $query = "INSERT INTO articles (article_title, article_content, category_id) VALUES ('$articleTitle', '$articleContent', $categoryId)";
+    $query = "INSERT INTO articles (article_title, article_content, category_id) VALUES (:articleTitle, :articleContent, :categoryId)";
     $result = $connection->prepare($query);
-    $result->execute();
+    $result->execute(array( // This array protects from SQL injections
+        ':articleTitle' => $articleTitle,
+        ':articleContent' => $articleContent,
+        ':categoryId' => $categoryId
+    ));
 }
 
 // Get article by id (and display values in inputs)
@@ -43,17 +47,20 @@ function getArticleById($articleId) {
     return $result->fetch();
 }
 
-// Modify article
+// Update article
 function modifyArticle($articleId, $articleTitle, $articleContent) {
     global $connection;
 
     $query = 
         "UPDATE articles 
-        SET article_title = '$articleTitle', article_content = '$articleContent' 
-        WHERE article_id = $articleId";
+        SET article_title = :articleTitle, article_content = :articleContent 
+        WHERE article_id = :articleId";
     $result = $connection->prepare($query);
-    $result->execute();
-
+    $result->execute(array( // This array protects from SQL injections
+        ':articleId' => $articleId,
+        ':articleTitle' => $articleTitle,
+        ':articleContent' => $articleContent
+    ));
 }
 
 // Delete product
