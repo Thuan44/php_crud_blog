@@ -102,3 +102,17 @@ function deleteArticle($articleId) {
     $result->execute();
 }
 
+
+
+# GET ALL ARTICLES ===================
+function listArticles() {
+    global $connection;
+
+    $query = "SELECT * FROM articles 
+            INNER JOIN categories ON articles.category_id = categories.category_id
+            ORDER BY articles.category_id";
+
+    $result = $connection->prepare($query);
+    $result->execute();
+    return $result->fetchAll();
+}
