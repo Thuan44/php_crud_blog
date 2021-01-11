@@ -23,8 +23,8 @@ Entrer des articles liés à la catégorie
 
 
 <?php 
-@$articleTitle = $_POST['article_title'];
-@$articleContent = $_POST['article_content'];
+@$articleTitle = htmlspecialchars($_POST['article_title']); // Protect from XSS attacks
+@$articleContent = htmlspecialchars($_POST['article_content']);
 @$categoryId = $_POST['category_id'];
 @$articleId = $_POST['article_id'];
 
@@ -142,8 +142,6 @@ $listTitles = listTitles($categoryId);
 
 
 <hr>
-
-
 
 
 
