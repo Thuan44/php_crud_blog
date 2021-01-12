@@ -146,9 +146,23 @@ function setComment($commentContent, $userId, $articleId) {
 // Get list of comments by article id
 function listComments($articleId) {
     global $connection;
-    
+
     $query = "SELECT * FROM comments WHERE article_id = $articleId";
     $result = $connection->prepare($query);
     $result->execute();
     return $result->fetchAll();
+}
+
+// Get id of commentators
+function commentatorsUserId($id) {
+    global $connection;
+
+    $query = "SELECT user_name
+            FROM users
+            INNER JOIN comments ON users.user_id = comments.user_id
+            WHERE users.user_id = $id";
+    
+    $result = $connection->prepare($query);
+    $result->execute();
+    return $result->fetch();
 }

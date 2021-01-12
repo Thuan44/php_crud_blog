@@ -29,12 +29,21 @@ if (isset($_POST['add-comment'])) {
 // Get list of comments by article id
 $listComments = listComments($articleId);
 
+// Get id of commentators
+// $commentatorsUserId = commentatorsUserId();
+// var_dump($commentatorsUserId);
+
+
+
 // Get list of categories
 $listCategories = listCategories();
 ?>
 
 <!-- Page Content -->
 <div class="container">
+
+    <!-- Breadcrumb -->
+    <a href="index.php"><i class="fas fa-long-arrow-alt-left"></i> Back</a>
 
     <div class="row">
 
@@ -78,7 +87,13 @@ $listCategories = listCategories();
 
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
 
+            
             <hr>
+
+            <div class="d-flex justify-content-between" role="group" aria-label="Basic example">
+                <a href="#" class="text-secondary"><i class="fas fa-chevron-left"></i> Previous article</a>
+                <a href="#" class="text-secondary">Next article <i class="fas fa-chevron-right"></i></a>
+            </div>
 
             <!-- Comments Form -->
             <?php if (isset($_SESSION['user_id'])) { ?>
@@ -97,25 +112,30 @@ $listCategories = listCategories();
                 <div class="card my-4">
                     <h5 class="card-header">Comments</h5>
                     <div class="card-body d-flex justify-content-start align-items-center">
-                            <p class="m-0">You want to leave a comment ? Please log in first</p>
-                            <a href="login.php" class="btn btn-primary btn-sm ml-2">Log in <i class="fas fa-sign-in-alt"></i></a>
+                        <p class="m-0">You want to leave a comment ? Please log in first</p>
+                        <a href="login.php" class="btn btn-primary btn-sm ml-2">Log in <i class="fas fa-sign-in-alt"></i></a>
                     </div>
                 </div>
             <?php } ?>
 
             <!-- Single Comment -->
-            <?php foreach($listComments as $comment): ?>
-            <div class="media mb-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0"><?php echo $_SESSION['user_name'] ?></h5>
-                    <p><?php echo $comment['comment_content'] ?></p>
+            <?php foreach ($listComments as $comment) : ?>
+                <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <h5 class="mt-0">
+                            <?php
+                            $data = commentatorsUserId($comment['user_id']);
+                            echo '<span class="font-italic" style="font-size: .8rem">Posted by : </span>' . $data['user_name'];
+                            ?>
+                        </h5>
+                        <p><?php echo $comment['comment_content'] ?></p>
+                    </div>
                 </div>
-            </div>
             <?php endforeach ?>
 
             <!-- Comment with nested comments -->
-            <div class="media mb-4">
+            <!-- <div class="media mb-4">
                 <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                 <div class="media-body">
                     <h5 class="mt-0">Commenter Name</h5>
@@ -130,7 +150,7 @@ $listCategories = listCategories();
                     </div>
 
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
@@ -159,7 +179,7 @@ $listCategories = listCategories();
                             <ul class="list-unstyled mb-0">
                                 <?php foreach ($listCategories as $category) : ?>
                                     <li>
-                                        <a href="#"><?php echo $category['category_name'] ?></a>
+                                        <a href="#" class=""><?php echo $category['category_name'] ?></a>
                                     </li>
                                 <?php endforeach ?>
                             </ul>
