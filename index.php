@@ -33,7 +33,7 @@ $listArticles = listArticles();
                         </div>
                         <hr>
                             <p class="card-text text-justify"><?php echo $article['article_content'] ?></p>
-                            <div style="position: absolute; right: 18px; bottom: 0"><a href="singleArticle.php" class="read-article btn btn-primary btn-sm"><i class="fab fa-readme"></i> Read article</a></div>
+                            <div style="position: absolute; right: 18px; bottom: 0"><a href="singleArticle.php?id=<?php echo $article['article_id'];?>" class="read-article btn btn-primary btn-sm"><i class="fab fa-readme"></i> Read article</a></div>
                     </div>
                     <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
                         <div class="views">Oct 20, 12:45PM

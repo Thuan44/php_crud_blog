@@ -33,6 +33,10 @@ include_once 'admin/fonctions.php';
         <a class="nav-link" href="index.php">Articles</a>
       </li>
     </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control search mr-sm-2" type="search" placeholder="Search for an article..." aria-label="Search">
+      <button class="btn btn-outline-white my-2 my-sm-0" type="submit">Search</button>
+    </form>
   </div>
 
   <!-- Sign out button -->

@@ -3,6 +3,11 @@
     border-color: #fff;
 }
 
+.search:hover {
+    border-color: #fff;
+}
+
+
 /* General */
 .divider {
     height: 1px;
@@ -11,6 +16,10 @@
     border-radius: 5px;
     margin: 0 auto 20px;
 }
+
+
+/* Single Article Page */
+
 
 /* Media Queries */
 @media screen and (max-width: 992px) {
@@ -27,5 +36,16 @@
         right: 10px;
         top: 8px;
         float: right;
+    }
+}
+
+/* Category list in Single Article Page */
+@media screen and (max-width: 992px) {
+    .list-unstyled {
+        display: flex;
+    }
+    
+    .list-unstyled a {
+        margin-right: 20px;
     }
 }

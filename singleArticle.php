@@ -2,14 +2,17 @@
 
 
 <?php
+// Get article id from url
+if (isset($_GET['id'])) {
+    $articleId = intval($_GET['id']); // Convert string to int
+}
 
-@$articleId = $_SESSION['article_id'];
-
-// Display article title and content in inputs
-if(isset($_SESSION['article_id'])) {
+// Display article title and content 
+if (isset($_GET['id'])) {
     $getArticleById = getArticleById($articleId);
 }
 
+$listCategories = listCategories();
 
 ?>
 
@@ -22,18 +25,16 @@ if(isset($_SESSION['article_id'])) {
         <div class="col-lg-8">
 
             <!-- Title -->
-            <h1 class="mt-4">Post Title</h1>
+            <h1 class="mt-4 font-weight-bold"><?php echo $getArticleById['article_title'] ?></h1>
 
             <!-- Author -->
-            <p class="lead">
+            <p class="lead mb-1">
                 by
                 <a href="#">Start Bootstrap</a>
             </p>
 
-            <hr>
-
             <!-- Date/Time -->
-            <p>Posted on January 1, 2019 at 12:00 PM</p>
+            <p class="font-italic">Posted on January 1, 2019 at 12:00 PM</p>
 
             <hr>
 
@@ -43,7 +44,7 @@ if(isset($_SESSION['article_id'])) {
             <hr>
 
             <!-- Post Content -->
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+            <p class="lead"><?php echo $getArticleById['article_content'] ?></p>
 
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
 
@@ -113,14 +114,14 @@ if(isset($_SESSION['article_id'])) {
         </div>
 
         <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-12 col-sm-12">
 
             <!-- Search Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
+                        <input type="text" class="form-control" placeholder="Search for an article...">
                         <span class="input-group-append">
                             <button class="btn btn-secondary" type="button">Go!</button>
                         </span>
@@ -133,30 +134,13 @@ if(isset($_SESSION['article_id'])) {
                 <h5 class="card-header">Categories</h5>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">Web Design</a>
-                                </li>
-                                <li>
-                                    <a href="#">HTML</a>
-                                </li>
-                                <li>
-                                    <a href="#">Freebies</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">JavaScript</a>
-                                </li>
-                                <li>
-                                    <a href="#">CSS</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tutorials</a>
-                                </li>
+                                <?php foreach ($listCategories as $category): ?>
+                                    <li>
+                                        <a href="#"><?php echo $category['category_name'] ?></a>
+                                    </li>
+                                <?php endforeach ?>
                             </ul>
                         </div>
                     </div>
