@@ -23,19 +23,10 @@ if (isset($_POST['add-comment'])) {
     setComment($commentContent, $userId, $articleId);
 }
 
-// //  Get user by id
-// $getUserById = getArticleById();
-
 // Get list of comments by article id
 $listComments = listComments($articleId);
 
-// Get id of commentators
-// $commentatorsUserId = commentatorsUserId();
-// var_dump($commentatorsUserId);
-
-
-
-// Get list of categories
+// list of categories
 $listCategories = listCategories();
 ?>
 
@@ -43,7 +34,7 @@ $listCategories = listCategories();
 <div class="container">
 
     <!-- Breadcrumb -->
-    <a href="index.php"><i class="fas fa-long-arrow-alt-left"></i> Back</a>
+    <a href="index.php" class="back-link"><i class="fas fa-arrow-left"></i> Back to articles</a>
 
     <div class="row">
 

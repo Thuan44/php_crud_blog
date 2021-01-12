@@ -1,20 +1,29 @@
-/* Navbar */
-.sign-out:hover {
-    border-color: #fff;
-}
-
-.search:hover {
-    border-color: #fff;
-}
-
-
 /* General */
+body{
+    height: 100vh;
+}
+
 .divider {
     height: 1px;
     width: 50px;
     background-color: rgba(50, 50, 50, .2);
     border-radius: 5px;
     margin: 0 auto 20px;
+}
+
+footer p {
+    margin: 0 !important;
+}
+
+
+/* Navbar */
+.sign-out:hover {
+    border-color: #fff;
+}
+
+/* Login Page */
+.input-login {
+    border-radius: 5px;
 }
 
 
@@ -26,9 +35,15 @@
     .navbar-brand{
         display: none;
     }
-
+    
     .navbar-nav {
         text-align: center;
+    }
+    
+    .greeting {
+        position: absolute;
+        right: 52px;
+        top: 19px;
     }
 
     .sign-out {

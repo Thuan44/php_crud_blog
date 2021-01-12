@@ -133,16 +133,6 @@ function setComment($commentContent, $userId, $articleId) {
     ));
 }
 
-// // Get user by id
-// function getUserById($userId) {
-//     global $connection;
-    
-//     $query = "SELECT * FROM users WHERE user_id = $userId";
-//     $result = $connection->prepare($query);
-//     $result->execute();
-//     return $result->fetch();
-// }
-
 // Get list of comments by article id
 function listComments($articleId) {
     global $connection;
