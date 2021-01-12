@@ -15,6 +15,7 @@ function login($userEmail, $userPassword) {
         $_SESSION['user_email'] = $data['user_email']; 
         $_SESSION['user_password'] = $data['user_password']; 
         $_SESSION['user_role'] = $data['user_role']; 
+        $_SESSION['user_id'] = $data['user_id']; 
 
         // Admin
         if( $_SESSION['user_role'] == 5) {
@@ -53,9 +54,9 @@ function listTitles($categoryId) {
 
 
 
-# ADD / MODIFY / DELETE ======================
+# ADD / MODIFY / DELETE ARTICLE ======================
 // Add an article to the database
-function setProduct($articleTitle, $articleContent, $categoryId) {
+function setArticle($articleTitle, $articleContent, $categoryId) {
     global $connection;
     
     $query = "INSERT INTO articles (article_title, article_content, category_id) VALUES (:articleTitle, :articleContent, :categoryId)";
@@ -112,6 +113,41 @@ function listArticles() {
             INNER JOIN categories ON articles.category_id = categories.category_id
             ORDER BY articles.category_id";
 
+    $result = $connection->prepare($query);
+    $result->execute();
+    return $result->fetchAll();
+}
+
+
+# COMMENTS ===================
+// Add a comment to the database
+function setComment($commentContent, $userId, $articleId) {
+    global $connection;
+    
+    $query = "INSERT INTO comments (comment_content, user_id, article_id) VALUES (:commentContent, :userId, :articleId )";
+    $result = $connection->prepare($query);
+    $result->execute(array(
+        ':commentContent' => $commentContent,
+        ':userId' => $userId,
+        ':articleId' => $articleId
+    ));
+}
+
+// // Get user by id
+// function getUserById($userId) {
+//     global $connection;
+    
+//     $query = "SELECT * FROM users WHERE user_id = $userId";
+//     $result = $connection->prepare($query);
+//     $result->execute();
+//     return $result->fetch();
+// }
+
+// Get list of comments by article id
+function listComments($articleId) {
+    global $connection;
+    
+    $query = "SELECT * FROM comments WHERE article_id = $articleId";
     $result = $connection->prepare($query);
     $result->execute();
     return $result->fetchAll();

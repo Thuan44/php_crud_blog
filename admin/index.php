@@ -16,7 +16,7 @@ $listCategories = listCategories();
 
 // Call add function
 if(isset($_POST['add'])) {
-    setProduct($articleTitle, $articleContent, $categoryId);
+    setArticle($articleTitle, $articleContent, $categoryId);
 }
 
 // Call modify function
@@ -44,7 +44,7 @@ $listTitles = listTitles($categoryId);
 <div class="container">
 
 <!-- ADD / MODIFY PRODUCT -->
-<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+<form action="singleArticle.php?id=<?php echo $article['article_id'];?>" method="POST">
 
     <h3 class="p-2 m-2 text-center">Article Management System</h3>
 

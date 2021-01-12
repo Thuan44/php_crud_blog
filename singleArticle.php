@@ -2,6 +2,12 @@
 
 
 <?php
+@$commentContent = htmlspecialchars($_POST['comment_content']);
+@$userId = "";
+if (isset($_SESSION['user_id'])) {
+    @$userId = $_SESSION['user_id'];
+}
+
 // Get article id from url
 if (isset($_GET['id'])) {
     $articleId = intval($_GET['id']); // Convert string to int
@@ -12,8 +18,19 @@ if (isset($_GET['id'])) {
     $getArticleById = getArticleById($articleId);
 }
 
-$listCategories = listCategories();
+// Call add comment function
+if (isset($_POST['add-comment'])) {
+    setComment($commentContent, $userId, $articleId);
+}
 
+// //  Get user by id
+// $getUserById = getArticleById();
+
+// Get list of comments by article id
+$listComments = listComments($articleId);
+
+// Get list of categories
+$listCategories = listCategories();
 ?>
 
 <!-- Page Content -->
@@ -64,26 +81,38 @@ $listCategories = listCategories();
             <hr>
 
             <!-- Comments Form -->
-            <div class="card my-4">
-                <h5 class="card-header">Leave a Comment:</h5>
-                <div class="card-body">
-                    <form>
-                        <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+            <?php if (isset($_SESSION['user_id'])) { ?>
+                <div class="card my-4">
+                    <h5 class="card-header">Leave a Comment:</h5>
+                    <div class="card-body">
+                        <form action="singleArticle.php?id=<?php echo $articleId; ?>" method="POST">
+                            <div class="form-group">
+                                <textarea class="form-control" name="comment_content" rows="3"></textarea>
+                            </div>
+                            <button type="submit" name="add-comment" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            <?php } else { ?>
+                <div class="card my-4">
+                    <h5 class="card-header">Comments</h5>
+                    <div class="card-body d-flex justify-content-start align-items-center">
+                            <p class="m-0">You want to leave a comment ? Please log in first</p>
+                            <a href="login.php" class="btn btn-primary btn-sm ml-2">Log in <i class="fas fa-sign-in-alt"></i></a>
+                    </div>
+                </div>
+            <?php } ?>
 
             <!-- Single Comment -->
+            <?php foreach($listComments as $comment): ?>
             <div class="media mb-4">
                 <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                 <div class="media-body">
-                    <h5 class="mt-0">Commenter Name</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                    <h5 class="mt-0"><?php echo $_SESSION['user_name'] ?></h5>
+                    <p><?php echo $comment['comment_content'] ?></p>
                 </div>
             </div>
+            <?php endforeach ?>
 
             <!-- Comment with nested comments -->
             <div class="media mb-4">
@@ -91,14 +120,6 @@ $listCategories = listCategories();
                 <div class="media-body">
                     <h5 class="mt-0">Commenter Name</h5>
                     Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-                    <div class="media mt-4">
-                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                        <div class="media-body">
-                            <h5 class="mt-0">Commenter Name</h5>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                        </div>
-                    </div>
 
                     <div class="media mt-4">
                         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
@@ -136,7 +157,7 @@ $listCategories = listCategories();
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-unstyled mb-0">
-                                <?php foreach ($listCategories as $category): ?>
+                                <?php foreach ($listCategories as $category) : ?>
                                     <li>
                                         <a href="#"><?php echo $category['category_name'] ?></a>
                                     </li>
