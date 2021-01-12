@@ -1,6 +1,31 @@
+/* Navbar */
+.sign-out:hover {
+    border-color: #fff;
+}
+
+/* General */
 .divider {
-    height: 2px;
+    height: 1px;
     width: 50px;
-    background-color: #4582EC;
+    background-color: rgba(50, 50, 50, .2);
     border-radius: 5px;
+    margin: 0 auto 20px;
+}
+
+/* Media Queries */
+@media screen and (max-width: 992px) {
+    .navbar-brand{
+        display: none;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .sign-out {
+        position: absolute;
+        right: 10px;
+        top: 8px;
+        float: right;
+    }
 }

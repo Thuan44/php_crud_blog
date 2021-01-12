@@ -11,7 +11,7 @@ include_once 'admin/fonctions.php';
     <title>Blog Become a Dev</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
@@ -30,17 +30,16 @@ include_once 'admin/fonctions.php';
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Articles</a>
+        <a class="nav-link" href="index.php">Articles</a>
       </li>
     </ul>
   </div>
 
   <!-- Sign out button -->
-<a href="logout.php" class="btn btn-outline-secondary"><i class="fas fa-sign-out-alt"></i></a>
+<a href="logout.php" class="btn text-white sign-out"><i class="fas fa-sign-out-alt"></i></a>
 
 </nav>
 
 <h1 class="rounded border p-2 m-4 text-center text-white bg-primary">BECOME A DEV</h1>
 <p class="text-center font-italic">The blog that will make you become a more professional developer</p>
-    
 

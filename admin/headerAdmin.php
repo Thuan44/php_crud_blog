@@ -11,7 +11,7 @@ include_once 'fonctions.php';
     <title>Blog Become a Dev</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -36,7 +36,7 @@ include_once 'fonctions.php';
   </div>
 
   <!-- Sign out button -->
-<a href="../logout.php" class="btn btn-outline-secondary"><i class="fas fa-sign-out-alt"></i></a>
+<a href="../logout.php" class="btn btn-white sign-out"><i class="fas fa-sign-out-alt"></i></a>
 
 </nav>
 
