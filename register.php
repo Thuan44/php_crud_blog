@@ -6,7 +6,7 @@ include_once 'admin/fonctions.php';
 <?php 
 
 $firstname = $name = $email = "";
-$nameError = $emailError = $passwordError =  "";
+$nameError = $emailError = $passwordError = $passwordCheckError = "";
 $isSuccess = false;
 
 function isEmail($var) {
@@ -18,6 +18,21 @@ function verifyInput($var) {
     $var = stripslashes($var); // Remove backslashes
     $var = htmlspecialchars($var);
     return $var;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { // if the request method used is POST
+    $name = verifyInput($_POST['name']);
+    $email = verifyInput($_POST['email']);
+    $isSuccess =  true;
+    
+    if(empty($name)) {
+        $nameError = "Please enter your name";
+        $isSuccess = false;
+    }
+    if(!isEmail($email)) { // If $email is not valid
+        $emailError = "The email address is invalid";
+        $isSuccess = false;
+    }    
 }
 ?>
 
@@ -47,44 +62,56 @@ function verifyInput($var) {
 
         <div class="row justify-content-center border rounded p-5">
             <div class="col-lg-10 col-lg-offset-1">
-                <form action="index.php" id="signup-form" method="POST" role="form">
+                <form 
+                    action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
+                    id="signup-form" method="POST" role="form">
 
                     <div class="row">
                         <!-- Name -->
                         <div class="col-md-12">
                             <label for="name">Your name*</label>
                             <input type="text" id="name" name="name" class="form-control" value="">
-                            <p class="comments"><?php echo $nameError; ?></p>
+                            <p class="comments text-danger"><?php echo $nameError; ?></p>
                         </div>
 
                         <!-- Email -->
                         <div class="col-md-12">
                             <label for="email">Email*</label>
-                            <input type="email" id="email" name="email" class="form-control" value="">
-                            <p class="comments"><?php echo $emailError; ?></p>
+                            <input type="text" id="email" name="email" class="form-control" value="">
+                            <p class="comments text-danger"><?php echo $emailError; ?></p>
                         </div>
 
                         <!-- Password-->
                         <div class="col-md-12">
-                            <label for="password">Téléphone</label>
+                            <label for="password">Choose a password*</label>
                             <input type="password" id="password" name="password" class="form-control" value="">
                             <p class="comments"><?php echo $passwordError; ?></p>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="password2">Confirm your password*</label>
+                            <input type="password" id="password2" name="password2" class="form-control" value="">
+                            <p class="comments"><?php echo $passwordCheckError; ?></p>
                         </div>
 
                         <!-- Required info -->
                         <div class="col-md-12">
-                            <p><strong>*These fields are required</strong></p>
+                            <p class="font-italic">*These fields are required</p>
                         </div>
 
                         <!-- Submit -->
                         <div class="col-md-12">
-                            <input type="submit" class="btn btn-primary w-100" value="Create account">
+                            <input type="submit" class="btn btn-primary p-2 w-100" value="Create account">
                         </div>
 
+                        
                     </div>
-
+                    
                 </form>
+
             </div>
+            
+            <a href="login.php" class="text-center" style="color: #979797"><small>Back to login</small></a>
+
         </div>
 
     </div>

@@ -11,6 +11,13 @@ body{
     margin: 0 auto 20px;
 }
 
+.double-divider {
+    height: 1px;
+    width: 20px;
+    background-color: rgba(50, 50, 50, .2);
+    border-radius: 5px;
+}
+
 footer p {
     margin: 0 !important;
 }
@@ -24,6 +31,13 @@ footer p {
 /* Login Page */
 .input-login {
     border-radius: 5px;
+}
+
+.small-divider {
+    height: 1px;
+    width: 20px;
+    background-color: rgba(50, 50, 50, .2);
+    margin: 10px auto 10px;
 }
 
 

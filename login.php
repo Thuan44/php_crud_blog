@@ -43,12 +43,14 @@ if(isset($_POST)) {
 
         <input class="input-group input-login mb-2" type="email" name="user_email" placeholder="Your email" value="admin@gmail.com" required>
         <input class="input-group input-login mb-2"  type="password" name="user_password" placeholder="Your Pasword" value="admin" required >
-        <input class="btn btn-primary w-100" type="submit" name="submit" value="Submit">
+        <input class="btn btn-primary w-100" type="submit" name="submit" value="Let's dev !">
 
     </form>
 
     <small class="mt-2">Don't have an account yet ?</small>
     <a href="register.php">Sign up</a>
+    <div class="small-divider"></div>
+    <a href="#"><small>Forgot your password ?</small></a>
 
 </div>
 

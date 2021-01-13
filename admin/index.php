@@ -44,7 +44,7 @@ $listTitles = listTitles($categoryId);
 <div class="container">
 
 <!-- ADD / MODIFY PRODUCT -->
-<form action="singleArticle.php?id=<?php echo $article['article_id'];?>" method="POST">
+<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
 
     <h3 class="p-2 m-2 text-center">Article Management System</h3>
 

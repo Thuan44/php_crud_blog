@@ -156,3 +156,12 @@ function commentatorsUserId($id) {
     $result->execute();
     return $result->fetch();
 }
+
+// Delete comment
+function deleteComment($commentId) {
+    global $connection;
+
+    $query = "DELETE FROM comments WHERE comment_id = $commentId";
+    $result = $connection->prepare($query);
+    $result->execute();
+}
