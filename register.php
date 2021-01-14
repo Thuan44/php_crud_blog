@@ -4,25 +4,10 @@ include_once 'admin/fonctions.php';
 ?>
 
 <?php 
-
-$firstname = $name = $email = "";
-$nameError = $emailError = $passwordError = $passwordCheckError = "";
-$isSuccess = false;
-
-function isEmail($var) {
-    return filter_var($var, FILTER_VALIDATE_EMAIL); // Check if email is valid, returns a boolean
-}
-
-function verifyInput($var) {
-    $var = trim($var); // Remove white spaces and line breaks
-    $var = stripslashes($var); // Remove backslashes
-    $var = htmlspecialchars($var);
-    return $var;
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // if the request method used is POST
     $name = verifyInput($_POST['name']);
     $email = verifyInput($_POST['email']);
+    $password = verifyInput($_POST['password']);
     $isSuccess =  true;
     
     if(empty($name)) {
@@ -33,7 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // if the request method used is POS
         $emailError = "The email address is invalid";
         $isSuccess = false;
     }    
+
+    signUp($name, $email, $password);
 }
+
+@$name = $_POST['name'];
+@$email = $_POST['email'];
+@$password = $_POST['password'];
+
+$nameError = $emailError = $passwordError = $passwordCheckError = "";
+$isSuccess = false;
+
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // if the request method used is POS
 
     <div class="container shadow-sm rounded" style="max-width: 600px;">
 
-        <div class="row justify-content-center border rounded p-5">
+        <div class="row justify-content-center border rounded p-5 mb-5">
             <div class="col-lg-10 col-lg-offset-1">
                 <form 
                     action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
@@ -87,11 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // if the request method used is POS
                             <input type="password" id="password" name="password" class="form-control" value="">
                             <p class="comments"><?php echo $passwordError; ?></p>
                         </div>
-                        <div class="col-md-12">
-                            <label for="password2">Confirm your password*</label>
-                            <input type="password" id="password2" name="password2" class="form-control" value="">
-                            <p class="comments"><?php echo $passwordCheckError; ?></p>
-                        </div>
 
                         <!-- Required info -->
                         <div class="col-md-12">
@@ -108,10 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // if the request method used is POS
                     
                 </form>
 
+                <a href="login.php" class="text-center d-block" style="color: #979797"><small>Back to login</small></a>
+                
             </div>
-            
-            <a href="login.php" class="text-center" style="color: #979797"><small>Back to login</small></a>
-
         </div>
 
     </div>

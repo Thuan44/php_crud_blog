@@ -4,9 +4,6 @@
 @$categoryId = $_POST['category_id'];
 @$articleId = $_POST['article_id'];
 
-$listCategories = listCategories();
-$listTitles = listTitles($categoryId);
-$listComments = listComments($articleId);
 
 // Call delete function
 if(isset($_POST['delete'])){
@@ -14,25 +11,10 @@ if(isset($_POST['delete'])){
     deleteComment($commentId);
 }
 
-// @$productName = $_POST['product_name']; // @ prevents from error if $_POST does not exist
-// @$productPrice = $_POST['product_price'];
-// @$idCategory = $_POST['id_category'];
+$listCategories = listCategories();
+$listTitles = listTitles($categoryId);
+$listCommentsToValidate = listCommentsToValidate($articleId);
 
-// // Call modify function
-// if(isset($_POST['modify'])) {
-//     $idProduct = $_POST['id_product'];
-//     $productModif = getProductById($idProduct);
-//     $btn = true;
-// }
-
-// // Call save modification function
-// if(isset($_POST['saveModif'])) {
-//     $idProduct = $_POST['id_product'];
-//     updateProduct($idProduct, $productName, $productPrice);
-// }
-
-
-// $getListCatById = getListCatbyId($idCategory);
 ?>
 
 
@@ -76,7 +58,6 @@ if(isset($_POST['delete'])){
         </div>
 
         <div class="add-product-line d-flex align-items-center justify-content-center">
-                <input class="mr-2" type="text" name="product_name" value="<?= @$productModif['product_name'] ?>" placeholder="Search by user" style="height: 40px">
                 <button type="submit" name="search" class="btn btn-warning">Search <i class="fas fa-search"></i></button>
         </div>
 
@@ -93,23 +74,36 @@ if(isset($_POST['delete'])){
             <th>Date</th>
             <th>User</th>
             <th>Comment</th>
-            <th colspan="2">Actions</th> <!-- set 2 colums -->
+            <th>Validated ?</th>
+            <th colspan="3">Actions</th> <!-- set 2 colums -->
         </tr>
-        <?php foreach ($listComments as $comment) : ?>
+        <?php foreach ($listCommentsToValidate as $comment) : ?>
             <tr>
-                <td class="align-middle text-left"> 01/01/2021</td>
-                <td class="align-middle text-left">
-                    <?php $data = commentatorsUserId($comment['user_id']); echo $data['user_name']; ?>
+                <td class="align-middle text-center font-italic"> 01/01/2021</td>
+                <td class="align-middle text-center">
+                    <?php $data = commentatorsUserId($comment['user_id']); echo "<strong>" . $data['user_name'] . "</strong>"; ?>
                 </td>
                 <td class="align-middle text-left"><?= $comment['comment_content']; ?></td>
+                <td class="align-middle text-center">
+                    <?php if($comment['is_active']){
+                        echo '<span class="text-success"><i class="fas fa-check"></i></span>' . " YES";
+                    } else {
+                        echo '<span class="text-danger"><i class="fas fa-times"></i></span>' . " NO";
+                    }?>
+                </td>
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+                    <td class="align-middle">
+                        <button type="submit" name="validate" value="validate" class="btn btn-primary btn-sm">Validate <i class="far fa-thumbs-up"></i></button>
+                    </td>
                     <td class="align-middle">
                         <button type="submit" name="respond" value="respond" class="btn btn-info btn-sm">Respond <i class="fas fa-reply"></i></button>
                     </td>
                     <td class="align-middle">
                         <button type="submit" name="delete" value="delete" class="btn btn-danger btn-sm">Delete <i class="far fa-trash-alt"></i></button>
-                        <input type="hidden" name="comment_id" value="<?= @$comment['comment_id'] ?>">
                     </td>
+                    <input type="hidden" name="comment_id" value="<?= @$comment['comment_id'] ?>">
+                    <input type="hidden" name="article_id" value="<?= @$_POST['article_id'] ?>">
+                    <input type="hidden" name="category_id" value="<?= @$_POST['category_id'] ?>">
                 </form>
             </tr>
         <?php endforeach ?>

@@ -32,8 +32,8 @@ $listArticles = listArticles();
 
                         </div>
                         <hr>
-                            <p class="card-text text-justify"><?php echo $article['article_content'] ?></p>
-                            <div style="position: absolute; right: 18px; bottom: 0"><a href="singleArticle.php?id=<?php echo $article['article_id'];?>" class="read-article btn btn-primary btn-sm"><i class="fab fa-readme"></i> Read article</a></div>
+                        <p class="card-text text-justify"><?php echo $article['article_content'] ?></p>
+                        <div style="position: absolute; right: 18px; bottom: 0"><a href="singleArticle.php?id=<?php echo $article['article_id']; ?>" class="read-article btn btn-primary btn-sm"><i class="fab fa-readme"></i> Read article</a></div>
                     </div>
                     <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
                         <div class="views">Oct 20, 12:45PM
@@ -50,7 +50,31 @@ $listArticles = listArticles();
         <?php endforeach ?>
     </div>
 
-
+    <div class="d-flex justify-content-center mt-3">
+        <ul class="pagination pagination-sm">
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&laquo;</a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">4</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">5</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">&raquo;</a>
+            </li>
+        </ul>
+    </div>
 
 </div>
 

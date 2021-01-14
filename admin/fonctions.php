@@ -31,6 +31,32 @@ function login($userEmail, $userPassword) {
     }
 }
 
+// Form security 
+function isEmail($var) {
+    return filter_var($var, FILTER_VALIDATE_EMAIL); // Check if email is valid, returns a boolean
+}
+
+function verifyInput($var) {
+    $var = trim($var); // Remove white spaces and line breaks
+    $var = stripslashes($var); // Remove backslashes
+    $var = htmlspecialchars($var);
+    return $var;
+}
+
+// Create account
+function signUp($userName, $userEmail, $userPassword) {
+    global $connection;
+    
+    $query = "INSERT INTO users (user_name, user_email, user_password) VALUES (:userName, :userEmail, :userPassword)";
+    $result = $connection->prepare($query);
+    $result->execute(array( // This array protects from SQL injections
+        ':userName' => $userName,
+        ':userEmail' => $userEmail,
+        ':userPassword' => $userPassword
+    ));
+}
+
+
 # DROP LISTS ======================
 //  Get the list of categories
 function listCategories() {
@@ -133,8 +159,18 @@ function setComment($commentContent, $userId, $articleId) {
     ));
 }
 
-// Get list of comments by article id
+// Get list of comments by article id (front-office)
 function listComments($articleId) {
+    global $connection;
+
+    $query = "SELECT * FROM comments WHERE article_id = $articleId AND is_active = 1";
+    $result = $connection->prepare($query);
+    $result->execute();
+    return $result->fetchAll();
+}
+
+// Get list of comments by article id (back-office)
+function listCommentsToValidate($articleId) {
     global $connection;
 
     $query = "SELECT * FROM comments WHERE article_id = $articleId";
