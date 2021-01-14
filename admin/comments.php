@@ -6,7 +6,6 @@
 
 $sql = "SELECT * FROM comments ";
 
-
 // Call delete function
 if(isset($_POST['delete'])){
     $commentId = @$_POST['comment_id'];
@@ -25,11 +24,12 @@ if(isset($_POST['invalidate'])){
     invalidateComment($commentId);
 }
 
-// Display filtered list
+// Search comments by user name
 if (isset($_POST['search'])) {
-    $searchTerm = $_POST['search-box'];
+    $searchTerm = @$_POST['search-box'];
 
-    $sql .= "WHERE user_id = $searchTerm ";
+    $sql .= "INNER JOIN users ON comments.user_id = users.user_id
+            WHERE article_id = $articleId AND users.user_name LIKE '%$searchTerm%' "; // Filter if contains what's between the double %
 }
 
 // Reset search
@@ -83,9 +83,9 @@ $listCommentsToValidate = listCommentsToValidate($articleId);
         </div>
 
         <div class="add-product-line d-flex align-items-center justify-content-center">
-                <input class="mr-2" type="text" name="search-box" value="" placeholder="Search by user id...">
+                <input class="mr-2" type="text" name="search-box" value="<?php echo @$searchTerm; ?>" placeholder="Search by user name...">
                 <button type="submit" name="search" class="btn btn-warning btn-sm mr-1">Search <i class="fas fa-search"></i></button>
-                <button type="submit" name="cancel-search" class="btn btn-warning btn-sm"><i class="far fa-window-close"></i></button>
+                <button type="submit" name="cancel-search" class="btn btn-warning btn-sm"><i class="fas fa-times"></i></button>
         </div>
 
     </form>
