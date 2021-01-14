@@ -4,6 +4,8 @@
 @$categoryId = $_POST['category_id'];
 @$articleId = $_POST['article_id'];
 
+$sql = "SELECT * FROM comments ";
+
 
 // Call delete function
 if(isset($_POST['delete'])){
@@ -11,20 +13,33 @@ if(isset($_POST['delete'])){
     deleteComment($commentId);
 }
 
+// Call validate function
 if(isset($_POST['validate'])){
     $commentId = @$_POST['comment_id'];
     validateComment($commentId);
 }
 
+// Call invalidate function
 if(isset($_POST['invalidate'])){
     $commentId = @$_POST['comment_id'];
     invalidateComment($commentId);
 }
 
+// Display filtered list
+if (isset($_POST['search'])) {
+    $searchTerm = $_POST['search-box'];
+
+    $sql .= "WHERE user_id = $searchTerm ";
+}
+
+// Reset search
+if (isset($_POST['cancel-search'])) {
+    unset($_POST['search-box']);
+}
+
 $listCategories = listCategories();
 $listTitles = listTitles($categoryId);
 $listCommentsToValidate = listCommentsToValidate($articleId);
-
 ?>
 
 
@@ -68,7 +83,9 @@ $listCommentsToValidate = listCommentsToValidate($articleId);
         </div>
 
         <div class="add-product-line d-flex align-items-center justify-content-center">
-                <button type="submit" name="search" class="btn btn-warning">Search <i class="fas fa-search"></i></button>
+                <input class="mr-2" type="text" name="search-box" value="" placeholder="Search by user id...">
+                <button type="submit" name="search" class="btn btn-warning btn-sm mr-1">Search <i class="fas fa-search"></i></button>
+                <button type="submit" name="cancel-search" class="btn btn-warning btn-sm"><i class="far fa-window-close"></i></button>
         </div>
 
     </form>
