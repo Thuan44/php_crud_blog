@@ -193,6 +193,30 @@ function commentatorsUserId($id) {
     return $result->fetch();
 }
 
+// Validate comment
+function validateComment($commentId) {
+    global $connection;
+
+    $query = "UPDATE comments
+            SET is_active = 1
+            WHERE comment_id = $commentId";
+
+    $result =$connection->prepare($query);
+    $result->execute();
+}
+
+// Invalidate comment
+function invalidateComment($commentId) {
+    global $connection;
+
+    $query = "UPDATE comments
+            SET is_active = 0
+            WHERE comment_id = $commentId";
+
+    $result =$connection->prepare($query);
+    $result->execute();
+}
+
 // Delete comment
 function deleteComment($commentId) {
     global $connection;
