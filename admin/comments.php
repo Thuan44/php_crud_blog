@@ -11,6 +11,16 @@ if(isset($_POST['delete'])){
     deleteComment($commentId);
 }
 
+if(isset($_POST['validate'])){
+    $commentId = @$_POST['comment_id'];
+    validateComment($commentId);
+}
+
+if(isset($_POST['invalidate'])){
+    $commentId = @$_POST['comment_id'];
+    invalidateComment($commentId);
+}
+
 $listCategories = listCategories();
 $listTitles = listTitles($categoryId);
 $listCommentsToValidate = listCommentsToValidate($articleId);
@@ -74,8 +84,8 @@ $listCommentsToValidate = listCommentsToValidate($articleId);
             <th>Date</th>
             <th>User</th>
             <th>Comment</th>
-            <th>Validated ?</th>
-            <th colspan="3">Actions</th> <!-- set 2 colums -->
+            <th>Is Valid</th>
+            <th colspan="4">Actions</th> <!-- set 2 colums -->
         </tr>
         <?php foreach ($listCommentsToValidate as $comment) : ?>
             <tr>
@@ -94,6 +104,9 @@ $listCommentsToValidate = listCommentsToValidate($articleId);
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                     <td class="align-middle">
                         <button type="submit" name="validate" value="validate" class="btn btn-primary btn-sm">Validate <i class="far fa-thumbs-up"></i></button>
+                    </td>
+                    <td class="align-middle">
+                        <button type="submit" name="invalidate" value="invalidate" class="btn btn-secondary btn-sm">Invalidate <i class="far fa-thumbs-down"></i></button>
                     </td>
                     <td class="align-middle">
                         <button type="submit" name="respond" value="respond" class="btn btn-info btn-sm">Respond <i class="fas fa-reply"></i></button>
