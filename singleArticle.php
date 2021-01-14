@@ -103,7 +103,7 @@ $listCategories = listCategories();
                 <div class="card my-4">
                     <h5 class="card-header">Comments</h5>
                     <div class="card-body d-flex justify-content-start align-items-center">
-                        <p class="m-0">You want to leave a comment ? Please log in first</p>
+                        <p class="m-0">You want to leave a comment ? Just log in first</p>
                         <a href="login.php" class="btn btn-primary btn-sm ml-2">Log in <i class="fas fa-sign-in-alt"></i></a>
                     </div>
                 </div>
