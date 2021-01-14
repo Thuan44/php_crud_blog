@@ -4,6 +4,7 @@
 @$categoryId = $_POST['category_id'];
 @$articleId = $_POST['article_id'];
 
+$sql = "SELECT * FROM comments ";
 
 // Call delete function
 if(isset($_POST['delete'])){
@@ -23,10 +24,22 @@ if(isset($_POST['invalidate'])){
     invalidateComment($commentId);
 }
 
+// Search comments by user name
+if (isset($_POST['search'])) {
+    $searchTerm = @$_POST['search-box'];
+
+    $sql .= "INNER JOIN users ON comments.user_id = users.user_id
+            WHERE article_id = $articleId AND users.user_name LIKE '%$searchTerm%' "; // Filter if contains what's between the double %
+}
+
+// Reset search
+if (isset($_POST['cancel-search'])) {
+    unset($_POST['search-box']);
+}
+
 $listCategories = listCategories();
 $listTitles = listTitles($categoryId);
 $listCommentsToValidate = listCommentsToValidate($articleId);
-
 ?>
 
 
@@ -68,12 +81,12 @@ $listCommentsToValidate = listCommentsToValidate($articleId);
             <span class="m-2">or</span>
             <div class="double-divider"></div>
         </div>
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-            <div class="add-product-line d-flex align-items-center justify-content-center">
-                    <input class="mr-2" type="text" name="search-user" id="search-user" placeholder="Search by user...">
-                    <button type="submit" name="search" value="search" class="btn btn-warning btn-sm">Search <i class="fas fa-search"></i></button>
-            </div>
-        </form>
+
+        <div class="add-product-line d-flex align-items-center justify-content-center">
+                <input class="mr-2" type="text" name="search-box" value="<?php echo @$searchTerm; ?>" placeholder="Search by user name...">
+                <button type="submit" name="search" class="btn btn-warning btn-sm mr-1">Search <i class="fas fa-search"></i></button>
+                <button type="submit" name="cancel-search" class="btn btn-warning btn-sm"><i class="fas fa-times"></i></button>
+        </div>
 
     </form>
 
@@ -100,9 +113,9 @@ $listCommentsToValidate = listCommentsToValidate($articleId);
                 <td class="align-middle text-left"><?= $comment['comment_content']; ?></td>
                 <td class="align-middle text-center">
                     <?php if($comment['is_active']){
-                        echo '<span class="text-success"><i class="fas fa-check"></i></span>' . " YES";
+                        echo '<span class="text-success"><i class="fas fa-check"></i></span>';
                     } else {
-                        echo '<span class="text-danger"><i class="fas fa-times"></i></span>' . " NO";
+                        echo '<span class="text-danger"><i class="fas fa-times"></i></span>';
                     }?>
                 </td>
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
@@ -113,7 +126,7 @@ $listCommentsToValidate = listCommentsToValidate($articleId);
                         <button type="submit" name="invalidate" value="invalidate" class="btn btn-secondary btn-sm">Invalidate <i class="far fa-thumbs-down"></i></button>
                     </td>
                     <td class="align-middle">
-                        <button type="submit" name="respond" value="respond" class="btn btn-info btn-sm">Respond <i class="fas fa-reply"></i></button>
+                        <button type="submit" name="reply" value="reply" class="btn btn-info btn-sm">Reply <i class="fas fa-reply"></i></button>
                     </td>
                     <td class="align-middle">
                         <button type="submit" name="delete" value="delete" class="btn btn-danger btn-sm">Delete <i class="far fa-trash-alt"></i></button>

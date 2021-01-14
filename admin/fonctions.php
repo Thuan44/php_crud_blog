@@ -49,7 +49,7 @@ function signUp($userName, $userEmail, $userPassword) {
     
     $query = "INSERT INTO users (user_name, user_email, user_password) VALUES (:userName, :userEmail, :userPassword)";
     $result = $connection->prepare($query);
-    $result->execute(array( // This array protects from SQL injections
+    $result->execute(array( 
         ':userName' => $userName,
         ':userEmail' => $userEmail,
         ':userPassword' => $userPassword
@@ -172,11 +172,18 @@ function listComments($articleId) {
 // Get list of comments by article id (back-office)
 function listCommentsToValidate($articleId) {
     global $connection;
+    global $sql;
 
-    $query = "SELECT * FROM comments WHERE article_id = $articleId";
-    $result = $connection->prepare($query);
-    $result->execute();
-    return $result->fetchAll();
+    if (isset($_POST['search'])) {
+        $result = $connection->prepare($sql);
+        $result->execute();
+        return $result->fetchAll();
+    } else {
+        $query = "SELECT * FROM comments WHERE article_id = $articleId";
+        $result = $connection->prepare($query);
+        $result->execute();
+        return $result->fetchAll();
+    }
 }
 
 // Get id of commentators

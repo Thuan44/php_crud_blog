@@ -78,7 +78,7 @@ $listCategories = listCategories();
 
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
 
-            
+
             <hr>
 
             <div class="d-flex justify-content-between" role="group" aria-label="Basic example">
@@ -121,6 +121,7 @@ $listCategories = listCategories();
                             ?>
                         </h5>
                         <p><?php echo $comment['comment_content'] ?></p>
+                        <!-- Subcomment here -->
                     </div>
                 </div>
             <?php endforeach ?>
