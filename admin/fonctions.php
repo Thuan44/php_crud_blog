@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include_once 'uploadFile.php';
+
 # LOGIN  ======================
 function login($userEmail, $userPassword) {
     global $connection;
@@ -92,6 +94,12 @@ function setArticle($articleTitle, $articleContent, $categoryId) {
         ':articleContent' => $articleContent,
         ':categoryId' => $categoryId
     ));
+    
+    $articleId = $connection->lastInsertId(); // Get id that is created
+
+    if (isset($_FILES['file'])) {
+        uploadImg(($articleId));
+    }
 }
 
 // Get article by id (and display values in inputs)
