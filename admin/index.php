@@ -83,7 +83,7 @@ $listTitles = listTitles($categoryId);
         <textarea class="col-md-12 mb-3" name="article_content" id="" cols="30" rows="10" class="d-block" placeholder="Content of the article"><?= @$getArticleById['article_content'] ?></textarea>
 
         <div class="upload-file">
-            <p>Upload</p>
+            <h6>Upload a cover picture</h6>
             <input type="file" name="file[]" multiple="multiple" /><br />
         </div>
 

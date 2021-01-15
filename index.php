@@ -4,6 +4,8 @@
 
 <?php
 $listArticles = listArticles();
+
+
 ?>
 
 <div class="container">
@@ -13,9 +15,10 @@ $listArticles = listArticles();
 
     <div class="row">
         <?php foreach ($listArticles as $article) : ?>
+            <?php $getArticleImg = getArticleImg($article['article_id']); ?>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-4">
-
                 <div class="card shadow-sm h-100">
+                    <!-- <img src="./img/upload/<?php echo $getArticleImg['img_name']; ?>" class="card-img-top" alt="..."> -->
                     <div class="card-body position-relative">
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <h4 class="card-title font-weight-bold"><?php echo $article['article_title'] ?></h4>

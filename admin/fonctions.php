@@ -98,7 +98,7 @@ function setArticle($articleTitle, $articleContent, $categoryId) {
     $articleId = $connection->lastInsertId(); // Get id that is created
 
     if (isset($_FILES['file'])) {
-        uploadImg(($articleId));
+        uploadImg($articleId);
     }
 }
 
@@ -150,6 +150,16 @@ function listArticles() {
     $result = $connection->prepare($query);
     $result->execute();
     return $result->fetchAll();
+}
+
+// Get image of each article 
+function getArticleImg($articleId) {
+    global $connection;
+
+    $query = "SELECT img_name FROM images WHERE article_id = $articleId";
+    $result = $connection->prepare($query);
+    $result->execute();
+    return $result->fetch();
 }
 
 

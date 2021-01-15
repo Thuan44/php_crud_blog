@@ -32,8 +32,16 @@ function uploadImg($articleId) {
 }
 
 function getImgName($target_path, $articleId) {
-    var_dump($target_path); // Get image name + extension
-    var_dump($articleId);
+    
+    global $connection;
+    
+    $query = "INSERT INTO images (img_name, article_id) VALUES (:imgName, :articleId)";
+    $result = $connection->prepare($query);
+    $result->execute(array( 
+        ':imgName' => $target_path,
+        ':articleId' => $articleId
+    ));
+
 }
 
 
