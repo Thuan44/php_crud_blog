@@ -13,11 +13,6 @@ if ($_SESSION['user_role'] != 5) {
 
 $listCategories = listCategories();
 
-// Upload image
-if (isset($_POST['submit_img'])) {
-    uploadImg($articleId);
-}
-
 // Call add function
 if (isset($_POST['add'])) {
     setArticle($articleTitle, $articleContent, $categoryId);
@@ -81,11 +76,18 @@ $listTitles = listTitles($categoryId);
         <!-- Title input and Content input -->
         <input class="col-md-12 mb-3 mt-3" type="text" name="article_title" value="<?= @$getArticleById['article_title'] ?>" placeholder="Title" required style="height: 45px">
         <textarea class="col-md-12 mb-3" name="article_content" id="" cols="30" rows="10" class="d-block" placeholder="Content of the article"><?= @$getArticleById['article_content'] ?></textarea>
-
-        <div class="upload-file">
-            <h6>Upload a cover picture</h6>
-            <input type="file" name="file[]" multiple="multiple" /><br />
-        </div>
+        
+        <?php if (@$_POST['article_id']) { ?>
+            <div class="upload-file">
+                <h6>Change cover picture</h6>
+                <input type="file" name="file[]" multiple="multiple" />
+            </div>
+        <?php } else { ?>
+            <div class="upload-file">
+                <h6>Upload a cover picture</h6>
+                <input type="file" name="file[]" multiple="multiple" />
+            </div>
+        <?php } ?>
 
         <div class="actions text-center">
             <?php if (@$_POST['article_id']) { ?>
